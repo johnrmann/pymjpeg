@@ -1,6 +1,6 @@
 import os, time
 
-boundary = '--boundarydonotcross'
+boundary = '--andycam'
 
 def request_headers():
     return {
@@ -11,10 +11,15 @@ def request_headers():
         'Pragma': 'no-cache',
     }
 
-def image_headers(filename):
+def image_headers(filename=None, content=None):
+    if filename != None:
+        size = os.path.getsize(filename)
+    elif content != None:
+        size = len(content)
+    
     return {
         'X-Timestamp': time.time(),
-        'Content-Length': os.path.getsize(filename),
+        'Content-Length': size,
         #FIXME: mime-type must be set according file content
         'Content-Type': 'image/jpeg',
     }
